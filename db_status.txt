@@ -1,0 +1,12 @@
+DB Status:
+Users (4):
+- Budi Santoso: Saldo=0.00, Berat=0
+- dadang: Saldo=0.00, Berat=0
+- Samsul: Saldo=0.00, Berat=0
+- joko sulistiyo: Saldo=0.00, Berat=0
+Records (5):
+- Status: TERVALIDASI, Berat: 0, Nilai: 0.00
+- Status: MENUNGGU_VALIDASI, Berat: 2.9, Nilai: 8700.00
+- Status: DICATAT, Berat: 3.65, Nilai: 7300.00
+- Status: DICATAT, Berat: 24.9, Nilai: 49800.00
+- Status: DIBATALKAN, Berat: 6, Nilai: 12000.00

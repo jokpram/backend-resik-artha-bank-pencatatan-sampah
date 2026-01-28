@@ -1,0 +1,100 @@
+@baseUrl = http://localhost:9000/api
+@userEmail = budi@example.com
+@userPassword = password123
+@adminEmail = admin@resik.com
+@adminPassword = admin123
+
+### 1. Register User Baru
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "nama": "Budi Santoso",
+    "email": "{{userEmail}}",
+    "password": "{{userPassword}}",
+    "no_hp": "081234567890",
+    "alamat": "Jl. Kebon Jeruk No. 1"
+}
+
+### 2. Login User
+# @name loginUser
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "{{userEmail}}",
+    "password": "{{userPassword}}"
+}
+
+### Variable Token User
+@userToken = {{loginUser.response.body.token}}
+
+### 3. Cek Profil User (Me)
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{userToken}}
+
+### 4. Login Admin (Officer)
+# @name loginAdmin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "{{adminEmail}}",
+    "password": "{{adminPassword}}"
+}
+
+### Variable Token Admin
+@adminToken = {{loginAdmin.response.body.token}}
+
+### 5. Lihat Jenis Sampah (Ambil salah satu ID untuk upload)
+GET {{baseUrl}}/waste/types
+Authorization: Bearer {{userToken}}
+
+### 6. Upload Catatan Sampah (Multipart)
+# Ganti 'ID_JENIS_SAMPAH_DISINI' dengan ID dari response No. 5
+# Pastikan ada file gambar jika ingin test upload, atau gunakan Postman untuk fitur ini lebih mudah.
+# VS Code REST Client support file upload dengan syntax: < ./path/to/file.jpg
+# Contoh di bawah ini mungkin perlu disesuaikan path gambarnya.
+
+# POST {{baseUrl}}/waste
+# Authorization: Bearer {{userToken}}
+# Content-Type: multipart/form-data; boundary=MfnBound
+
+# --MfnBound
+# Content-Disposition: form-data; name="id_jenis"
+
+# ID_JENIS_SAMPAH_DISINI
+# --MfnBound
+# Content-Disposition: form-data; name="berat"
+
+# 2.5
+# --MfnBound
+# Content-Disposition: form-data; name="foto"; filename="test.jpg"
+# Content-Type: image/jpeg
+
+# < ./test.jpg
+# --MfnBound--
+
+### 7. Lihat Riwayat Sampah Saya (User)
+GET {{baseUrl}}/waste
+Authorization: Bearer {{userToken}}
+
+### 8. Lihat Semua Riwayat Sampah (Admin)
+GET {{baseUrl}}/waste
+Authorization: Bearer {{adminToken}}
+
+### 9. Validasi Sampah (Admin)
+# Ganti 'ID_RECORD_DISINI' dengan ID dari response No. 8
+PATCH {{baseUrl}}/waste/ID_RECORD_DISINI/validate
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{}
+
+### 10. Lihat Statistik User
+GET {{baseUrl}}/users/stats
+Authorization: Bearer {{userToken}}
+
+### 11. Lihat Leaderboard
+GET {{baseUrl}}/users/leaderboard
+Authorization: Bearer {{userToken}}

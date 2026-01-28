@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:9000/api
+@baseUrl = http://localhost:7000/api
 @userEmail = budi@example.com
 @userPassword = password123
 @adminEmail = admin@resik.com
